@@ -17,6 +17,8 @@ import javax.swing.border.EmptyBorder;
 
 import Package.AR;
 import Package.AS;
+import Package.Saisie;
+import java.awt.Color;
 
 
 
@@ -30,6 +32,7 @@ public class Taxivisuel extends JFrame {
 	private JLabel lblSaisirUnDept ;
 	private JLabel lblNombreDeKm ;
 	private JLabel lblDureDuTrajet;
+	private JLabel lblVeuillezRemplirLes;	
 	private JRadioButton rdbtnAllerSimple;
 	private JRadioButton rdbtnAllerRetour;
 	private JRadioButton rdbtnSemaine;
@@ -44,6 +47,7 @@ public class Taxivisuel extends JFrame {
 	private ButtonGroup semaine= new ButtonGroup();
 	private static  List<AR> AR1 =  new ArrayList<AR>();
 	private static  List<AS> AS1 =  new ArrayList<AS>();
+	private int i;
 
 
 	/**
@@ -82,6 +86,11 @@ public class Taxivisuel extends JFrame {
 		lblNombreDeKm.setVisible(false);
 		
 		NbKM = new JTextField();
+		NbKM.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+			}
+		});
 		NbKM.setBounds(243, 173, 114, 19);
 		contentPane.add(NbKM);
 		NbKM.setColumns(10);
@@ -137,13 +146,61 @@ public class Taxivisuel extends JFrame {
 		Jour.add(rdbtnNuit);
 		
 		btnCalculer = new JButton("Calculer");
+		btnCalculer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				double prix = 0.0;
+				
+					if(rdbtnAllerSimple.isSelected())
+					{ //Aller - Simple
+
+			            if(rdbtnSemaine.isSelected() && rdbtnJour.isSelected())
+			            {
+			            	System.out.print(AS1.get(i).getPriseCharge()+" - "+AS1.get(i).getTarifJS());
+			                prix = (AS1.get(i).getPriseCharge()) + ((Integer.parseInt(NbKM.getText())* AS1.get(i).getTarifJS()));
+			                if(Integer.parseInt(Duretrajet.getText()) > 60) //Et de plus d'une heure
+			                	prix = (int)(Integer.parseInt(Duretrajet.getText())/60) * AS1.get(i).getTarifHoraireJ();
+			        }
+			            else
+			            {
+			            	
+			                prix = AS1.get(i).getPriseCharge() + (Integer.parseInt(NbKM.getText()) * AS1.get(i).getTarifNW());
+			                if(Integer.parseInt(Duretrajet.getText()) > 60)
+			                    prix = (int)(Integer.parseInt(Duretrajet.getText())/60) * AS1.get(i).getTarifHoraireNWE();
+			            }
+			        }
+			        else if(rdbtnAllerRetour.isSelected())
+			        { //Aller - Retour
+			            if(rdbtnWeekEnd.isSelected() && rdbtnNuit.isSelected())
+			            {
+			            	
+			                prix = AR1.get(i).getPriseCharge() + (Integer.parseInt(NbKM.getText()) * AR1.get(i).getTarifJS());
+			                if(Integer.parseInt(Duretrajet.getText()) > 60)
+			                    prix = (int)(Integer.parseInt(Duretrajet.getText())/60) * AR1.get(i).getTarifHoraireJ();
+			            }
+			            else
+
+			            {
+			                prix = AR1.get(i).getPriseCharge() + (Integer.parseInt(NbKM.getText()) * AR1.get(i).getTarifNW());
+			                if(Integer.parseInt(Duretrajet.getText()) > 60)
+			                    prix = (int)(Integer.parseInt(Duretrajet.getText())/60) * AR1.get(i).getTarifHoraireNWE();
+			            }
+			        }
+					
+										
+						lblPourCeDplacement.setVisible(true);
+						lblPourCeDplacement.setText("Pour ce déplacement vous devrez payer :" + prix + "€");
+				}
+					//return prix;
+					
+			});
 		btnCalculer.setBounds(423, 393, 117, 25);
 		contentPane.add(btnCalculer);
 		btnCalculer.setVisible(false);
 			
 		
-	    lblPourCeDplacement = new JLabel("Pour ce déplacement vous devrez payer :");
-		lblPourCeDplacement.setBounds(53, 460, 292, 15);
+	    lblPourCeDplacement = new JLabel();
+		lblPourCeDplacement.setBounds(53, 460, 409, 15);
 		contentPane.add(lblPourCeDplacement);
 		lblPourCeDplacement.setVisible(false);
 	
@@ -176,7 +233,7 @@ public class Taxivisuel extends JFrame {
 		{
 		
 			 			 
-			 int i =0;
+			 i =0;
 			 boolean trouve= false;
 
 			 while (!trouve && i < AR1.size())
@@ -186,7 +243,7 @@ public class Taxivisuel extends JFrame {
 		         else
 		         	i++;
 		     }
-			 
+			
 			 if (!trouve)
 			 { 
 				 lblSaisirUnDept.setText("Erreur, Saisir un dept valide");
@@ -209,13 +266,38 @@ public class Taxivisuel extends JFrame {
 
 		}
 		});
+		
+		
 		btnValider.setBounds(368, 65, 117, 25);
 		contentPane.add(btnValider);		
 		
 		
 		btnRinitialiser = new JButton("Réinitialiser");
+		btnRinitialiser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				
+				
+				NumDept.setText(null);
+				lblSaisirUnDept.setText(null);
+				NbKM.setText(null);
+				Duretrajet.setText(null);
+				Voyage.clearSelection();
+				Jour.clearSelection();
+				semaine.clearSelection();
+				lblPourCeDplacement.setText(null);
+							
+			}
+		});
 		btnRinitialiser.setBounds(368, 114, 117, 25);
 		contentPane.add(btnRinitialiser);
+		
+		lblVeuillezRemplirLes = new JLabel("Veuillez remplir les champs SVP");
+		lblVeuillezRemplirLes.setForeground(Color.RED);
+		lblVeuillezRemplirLes.setBounds(343, 192, 241, 19);
+		contentPane.add(lblVeuillezRemplirLes);
+		lblVeuillezRemplirLes.setVisible(false);
+		
 		
 		
 		
