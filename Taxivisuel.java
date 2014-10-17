@@ -174,14 +174,14 @@ public class Taxivisuel extends JFrame {
 			            if(rdbtnWeekEnd.isSelected() && rdbtnNuit.isSelected())
 			            {
 			            	
-			                prix = AR1.get(i).getPriseCharge() + (Integer.parseInt(NbKM.getText()) * AR1.get(i).getTarifJS());
+			                prix = AR1.get(i).getPriseCharge() + (Integer.parseInt(NbKM.getText()) * AR1.get(i).getTarifNW());
 			                if(Integer.parseInt(Duretrajet.getText()) > 60)
 			                    prix = (int)(Integer.parseInt(Duretrajet.getText())/60) * AR1.get(i).getTarifHoraireJ();
 			            }
 			            else
 
 			            {
-			                prix = AR1.get(i).getPriseCharge() + (Integer.parseInt(NbKM.getText()) * AR1.get(i).getTarifNW());
+			                prix = AR1.get(i).getPriseCharge() + (Integer.parseInt(NbKM.getText()) * AR1.get(i).getTarifJS());
 			                if(Integer.parseInt(Duretrajet.getText()) > 60)
 			                    prix = (int)(Integer.parseInt(Duretrajet.getText())/60) * AR1.get(i).getTarifHoraireNWE();
 			            }
