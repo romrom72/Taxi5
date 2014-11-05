@@ -1,4 +1,9 @@
-package Wbuilder;
+/**
+ * Methodes est la classe comprenant toutes les infos pour la connection a la base de données
+ *
+ * @author Romain Locquet
+ * @version 1.0
+ */
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import Package.AR;
-import Package.AS;
+import AR;
+import AS;
 
 public class Methodes {
 

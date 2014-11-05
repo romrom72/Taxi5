@@ -1,4 +1,10 @@
-package Wbuilder;
+/**
+ * Taxivisuel est la classe permettant l'aperçu en interface homme machine. Ainsi que le calcul du remboursement
+ *
+ * @author Romain Locquet
+ * @version 1.0
+ */
+
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -15,9 +21,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import Package.AR;
-import Package.AS;
-import Package.Saisie;
+import AR;
+import AS;
+import Saisie;
 import java.awt.Color;
 
 
